@@ -8,17 +8,28 @@ RUN apk add --no-cache --virtual diagrams-build-dependencies \
 
 RUN pip install --prefix /opt/diagrams diagrams black
 
-FROM 0x01be/inkscape:xpra
+FROM alpine
 
 COPY --from=build /opt/diagrams/ /opt/diagrams/
 
-USER root
 RUN apk add --no-cache --virtual diagrams-runtime-dependencies \
     python3 \
     graphviz \
     imagemagick
 
+RUN apk add --no-cache --virtual kicad-edge-runtime-dependencies \
+    --repository http://dl-cdn.alpinelinux.org/alpine/edge/testing \
+    --repository http://dl-cdn.alpinelinux.org/alpine/edge/community \
+    --repository http://dl-cdn.alpinelinux.org/alpine/edge/main \
+    inkscape
+
 ENV PYTHONPATH /usr/lib/python3.8/site-packages/:/opt/diagrams/lib/python3.8/site-packages/
 
-USER xpra
+USER adduser -D -u 1000 diagrams
+
+WORKDIR /workspace
+
+RUN chown diagrams:diagrams /workspace
+
+USER diagrams
 
