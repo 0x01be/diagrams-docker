@@ -23,6 +23,7 @@ RUN apk add --no-cache --virtual kicad-edge-runtime-dependencies \
     --repository http://dl-cdn.alpinelinux.org/alpine/edge/main \
     inkscape
 
+ENV PATH ${PATH}:/opt/diagrams/bin/
 ENV PYTHONPATH /usr/lib/python3.8/site-packages/:/opt/diagrams/lib/python3.8/site-packages/
 
 USER adduser -D -u 1000 diagrams
