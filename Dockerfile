@@ -26,7 +26,7 @@ RUN apk add --no-cache --virtual kicad-edge-runtime-dependencies \
 ENV PATH ${PATH}:/opt/diagrams/bin/
 ENV PYTHONPATH /usr/lib/python3.8/site-packages/:/opt/diagrams/lib/python3.8/site-packages/
 
-USER adduser -D -u 1000 diagrams
+RUN adduser -D -u 1000 diagrams
 
 WORKDIR /workspace
 
